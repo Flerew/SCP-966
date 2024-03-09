@@ -11,9 +11,8 @@ using PlayerRoles.PlayableScps.HumeShield;
 namespace SCP_966.Playable
 {
     public class Methods
-    {
-        private Plugin plugin;
-        private Config config;
+    { 
+        private Config config = new Config();
         private Scp966 scp966 = new Scp966();
 
         public void TrySpawn966(Player player = null)
@@ -23,15 +22,16 @@ namespace SCP_966.Playable
                 if (player == null)
                 {
                     player = Player.Get(RoleTypeId.Spectator).ToList().RandomItem();
-                    scp966.AddRole(player);
-                    ConfigurePlayer966(player);
                 }
-                else
+
+                scp966.AddRole(player);
+                ConfigurePlayer966(ref player);
+                if(player.CustomInfo == scp966.CustomInfo)
                 {
-                    scp966.AddRole(player);
-                    ConfigurePlayer966(player);
+                    Cassie.MessageTranslated(config.CassieMessage, config.CassieMessage);
                 }
-            } catch(Exception ex)
+            } 
+            catch(Exception ex)
             {
                 Log.Error(ex.Message);
             }
@@ -45,7 +45,7 @@ namespace SCP_966.Playable
             }
         }
 
-        private void ConfigurePlayer966(Player player)
+        private void ConfigurePlayer966(ref Player player)
         {
             player.Role.Set(RoleTypeId.Scp0492);
             player.RankName = scp966.Name;

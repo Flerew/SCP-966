@@ -31,7 +31,7 @@ namespace SCP_966.Commands
             else
             {
                 methods.TrySpawn966();
-                response = "A random player has spawned as scp966";
+                response = "Try spawn a random player as scp966...";
                 return true;
             }
         }
